@@ -2,11 +2,14 @@
 
 int main(int argc, char *argv[]){
 
-    if (strcmp(argv[1], "man")==0){
+    if (argc>1){   
+
+        if (strcmp(argv[1], "man")==0){
         
         printMan();
 
-    }
+        }
+    }  
     else{
         fromSecstoCEST(200);
         printTime();
