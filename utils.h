@@ -6,4 +6,6 @@
 
 void fromSecstoCEST(int secs);
 
-char* printTime();
+void printTime();
+
+void printMan();
