@@ -33,10 +33,24 @@ void printMan(){
     printf("-d: modo depuración. Mostrará trazas adicionales para la depuración del programa.\n");
 }
 
-void startingArg(int argc, char *argv[]){
+void startingArg(int argc, char *argv[], char *servername, char *mode, int port){
     for(int i =1; i<argc; i++){
+
         if (strcmp(argv[i], "-s")==0){
+            printf("%s\n",argv[i+1]);
+            strcpy(servername,argv[i+1]);
             printf("Patatudo jijijijijjijiji \n");
         }
+        if  (strcmp(argv[i], "-m")==0){
+
+        }
+        if(strcmp(argv[i], "-p")==0){
+
+        }
+
+        if (strcmp(argv[i], "-d")==0){
+           
+        }
+        
     }
 }

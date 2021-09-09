@@ -1,5 +1,10 @@
 #include "utils.h"
 
+
+char *servername;
+char *mode;
+int port;
+
 int main(int argc, char *argv[]){
 
     if (argc==2){   
@@ -12,7 +17,7 @@ int main(int argc, char *argv[]){
         }
     if (argc>2){
             printf("toy aqui\n");
-            startingArg(argc, argv);
+            startingArg(argc, argv, servername, mode, port);
 
         }  
     else{
