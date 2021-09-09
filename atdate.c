@@ -8,11 +8,13 @@ int main(int argc, char *argv[]){
         
         printMan();
 
+            }
         }
-        if (argc>2){
-            
-        }
-    }  
+    if (argc>2){
+            printf("toy aqui\n");
+            startingArg(argc, argv);
+
+        }  
     else{
         fromSecstoCEST(200);
         printTime();

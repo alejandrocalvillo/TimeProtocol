@@ -9,3 +9,5 @@ void fromSecstoCEST(int secs);
 void printTime();
 
 void printMan();
+
+void startingArg(int argc, char *argv[]);
