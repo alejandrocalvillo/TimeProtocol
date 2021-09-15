@@ -5,6 +5,13 @@ char *servername;
 int mode;
 int port;
 
+void timerProtocol (){
+    int sockfd;
+    if(mode==0){//UDP MODE
+        sockfd=socket(PF_INET, SOCK_DGRAM,0);
+    }
+}
+
 int main(int argc, char *argv[]){
     servername=(char*)malloc(100);
     if (argc==2){ 
@@ -21,11 +28,8 @@ int main(int argc, char *argv[]){
             printf("%d\n", mode);
             printf("%s\n",servername);
         }  
-    else{
-        fromSecstoCEST(200);
-        printTime();
-        return 0;
-
-    }
+    timerProtocol();
 }
+
+
     
