@@ -5,6 +5,10 @@
 
 char* time;
 
+extern char *servername;
+extern int mode;
+extern int port;
+
 void fromSecstoCEST(int secs){
 
     time="Patata";
@@ -33,18 +37,34 @@ void printMan(){
     printf("-d: modo depuración. Mostrará trazas adicionales para la depuración del programa.\n");
 }
 
-void startingArg(int argc, char *argv[], char *servername, char *mode, int port){
+void startingArg(int argc, char *argv[]){
     for(int i =1; i<argc; i++){
 
         if (strcmp(argv[i], "-s")==0){
-            printf("%s\n",argv[i+1]);
             strcpy(servername,argv[i+1]);
-            printf("Patatudo jijijijijjijiji \n");
         }
         if  (strcmp(argv[i], "-m")==0){
 
+            if (strcmp(argv[i+1], "cu")==0)
+            {
+                mode=0;
+            }
+            
+             if (strcmp(argv[i+1], "ct")==0)
+            {
+                mode=1;
+            }
+            
+             if (strcmp(argv[i+1], "s")==0)
+            {
+                mode=2;
+            }
+            
+
         }
         if(strcmp(argv[i], "-p")==0){
+
+            port=atoi(argv[i+1]);
 
         }
 

@@ -10,4 +10,4 @@ void printTime();
 
 void printMan();
 
-void startingArg(int argc, char *argv[], char *servername, char *mode, int port);
+void startingArg(int argc, char *argv[]);

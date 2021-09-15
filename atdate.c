@@ -2,13 +2,13 @@
 
 
 char *servername;
-char *mode;
+int mode;
 int port;
 
 int main(int argc, char *argv[]){
-
-    if (argc==2){   
-
+    servername=(char*)malloc(100);
+    if (argc==2){ 
+         
         if (strcmp(argv[1], "man")==0){
         
         printMan();
@@ -16,9 +16,10 @@ int main(int argc, char *argv[]){
             }
         }
     if (argc>2){
-            printf("toy aqui\n");
-            startingArg(argc, argv, servername, mode, port);
-
+            startingArg(argc, argv);
+            printf("%d\n", port);
+            printf("%d\n", mode);
+            printf("%s\n",servername);
         }  
     else{
         fromSecstoCEST(200);
