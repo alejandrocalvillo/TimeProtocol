@@ -3,7 +3,7 @@
 
 char *servername;
 int mode;
-int port;
+int port=0;
 
 void timerProtocol (){
     int sockfd;
@@ -11,8 +11,11 @@ void timerProtocol (){
     struct sockaddr_in my_addr;
     struct sockaddr_in dest_addr;
     struct hostent *dest_server;
-    if(mode==0){//UDP MODE
+    if(mode==0){//UDP CLIENT
         u_int32_t datagram; //VOID DATAGRAM 32 bits
+        if (port==0){
+            port=37;
+        }
         sockfd=socket(PF_INET, SOCK_DGRAM,0);
         if (sockfd==-1){
             perror("Error al crear el SOCKT");
