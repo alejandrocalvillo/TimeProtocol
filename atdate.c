@@ -17,7 +17,10 @@ void timerProtocol (){
             perror("Error al crear el SOCKT");
             exit(0);
         }
-        dest_server=gethostbyname(servername);
+        if((dest_server=gethostbyname(servername))==NULL){
+            perror("NOT A VALID HOST");
+            exit(1);
+        }
        // dest_addr.sin_addr.s_addr=dest_server;
         
     }
