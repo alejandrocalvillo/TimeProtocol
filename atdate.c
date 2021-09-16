@@ -21,7 +21,10 @@ void timerProtocol (){
             perror("NOT A VALID HOST");
             exit(1);
         }
-       // dest_addr.sin_addr.s_addr=dest_server;
+        memcpy(&dest_addr.sin_addr,dest_server->h_addr_list[0], dest_server->h_length);
+        dest_addr.sin_family=AF_INET;
+        dest_addr.sin_port=htons(port);
+
         
     }
 }
