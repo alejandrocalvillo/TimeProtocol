@@ -2,22 +2,20 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
-
-char* time;
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h>
+#include <time.h>
 
 extern char *servername;
 extern int mode;
 extern int port;
 
-void fromSecstoCEST(int secs){
+void from_secs_to_cest(uint32_t * secs){
 
-    time="Patata";
-
-}
-
-void printTime(){
-
-    printf("%s\n", time);
+	time_t time = *secs - 2208988800;
+	printf("%s\n", ctime(&time));
 
 }
 
@@ -74,3 +72,4 @@ void startingArg(int argc, char *argv[]){
         
     }
 }
+

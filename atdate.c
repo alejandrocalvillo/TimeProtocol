@@ -20,15 +20,27 @@ void timerProtocol (){
         }
         if((dest_server=gethostbyname(servername))==NULL){//Resolvemos el host
             perror("NOT A VALID HOST");
-            exit(1);
+            exit(0);
         }
         memcpy(&dest_addr.sin_addr,dest_server->h_addr_list[0], dest_server->h_length);
         dest_addr.sin_family=AF_INET;
         dest_addr.sin_port=htons(port);
-
-       //errorCheck=sendto(sockfd, datagram);
-
+        errorCheck=sendto(sockfd, &datagram,(u_int32_t)4,0,(struct sockaddr *)&dest_addr,(socklen_t)sizeof(dest_addr));//Lo de los octetos me lia
+        if(errorCheck==-1){
+            perror("Ha ocurrido un error ");
+            exit(0);
+        }
+        socklen_t recvsize=(socklen_t)sizeof(dest_addr);
+        for(int i=0; i<4;i+=errorCheck){//Este for es porque envia en octetos, por eso necesito hacerlo 4 veces
+            errorCheck=recvfrom(sockfd, &datagram, (size_t)4,0,(struct sockaddr *)&dest_addr,&recvsize);
+            if(errorCheck==-1){
+                printf("Error at input");
+            }
+        }
+        datagram=ntohl(datagram);
+        from_secs_to_cest(&datagram);
     }
+    close(sockfd);
 }
 
 int main(int argc, char *argv[]){
@@ -43,9 +55,6 @@ int main(int argc, char *argv[]){
         }
     if (argc>2){
             startingArg(argc, argv);
-            printf("%d\n", port);
-            printf("%d\n", mode);
-            printf("%s\n",servername);
         }  
     timerProtocol();
 }
