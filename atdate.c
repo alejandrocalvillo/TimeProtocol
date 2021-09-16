@@ -7,6 +7,7 @@ int port;
 
 void timerProtocol (){
     int sockfd;
+    int errorCheck;
     struct sockaddr_in my_addr;
     struct sockaddr_in dest_addr;
     struct hostent *dest_server;
@@ -17,7 +18,7 @@ void timerProtocol (){
             perror("Error al crear el SOCKT");
             exit(0);
         }
-        if((dest_server=gethostbyname(servername))==NULL){
+        if((dest_server=gethostbyname(servername))==NULL){//Resolvemos el host
             perror("NOT A VALID HOST");
             exit(1);
         }
@@ -25,7 +26,8 @@ void timerProtocol (){
         dest_addr.sin_family=AF_INET;
         dest_addr.sin_port=htons(port);
 
-        
+       // errorCheck=sendto(sockfd, datagram);
+
     }
 }
 
