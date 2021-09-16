@@ -26,7 +26,7 @@ void timerProtocol (){
         dest_addr.sin_family=AF_INET;
         dest_addr.sin_port=htons(port);
 
-       // errorCheck=sendto(sockfd, datagram);
+       //errorCheck=sendto(sockfd, datagram);
 
     }
 }
