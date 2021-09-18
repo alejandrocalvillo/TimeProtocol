@@ -7,6 +7,7 @@
 #include <netinet/in.h>
 #include <netdb.h>
 #include <time.h>
+#include <signal.h>
 
 
 /**************

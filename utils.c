@@ -22,7 +22,8 @@ void printMan(){
     printf("-s serverhost: nombre del servidor TIME al que se conectará el programa para obtener la fecha y hora actual. Este argumento es obligatorio sólo si el programa se lanza en modo consulta, es decir, con -m cu o -m ct");
     printf(" \n");
     printf("\n");
-    printf("-m: para indicar el modo de ejecución del programa:\n");        printf("        cu: el programa arranca en modo consulta funcionando como cliente UDP.\n");
+    printf("-m: para indicar el modo de ejecución del programa:\n");        
+    printf("        cu: el programa arranca en modo consulta funcionando como cliente UDP.\n");
     printf("        ct: el programa arranca en modo consulta funcionando como cliente TCP.\n");
     printf("        s: el programa arranca en modo servidor.\n");
     printf("-p port: para indicar el número de puerto. \n");
@@ -70,4 +71,3 @@ void startingArg(int argc, char *argv[]){
         
     }
 }
-
