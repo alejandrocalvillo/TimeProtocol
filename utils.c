@@ -13,7 +13,6 @@ extern int mode;
 extern int port;
 
 void from_secs_to_cest(uint32_t * secs){
-
 	time_t time = *secs-2208988800;//Este numero corresponde a los segundos desde el 1 ENERO 1970
 	printf("%s",ctime(&time));
 }

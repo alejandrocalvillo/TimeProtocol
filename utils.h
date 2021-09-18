@@ -8,7 +8,26 @@
 #include <netdb.h>
 #include <time.h>
 
+
+/**************
+ * Prints manual when option "atdate man"
+ * 
+ * *************/
 void printMan();
-void from_secs_to_cest(uint32_t * secs);
+
+/**********************************************************************
+ This funtion will convert from 32 bit received from the server to cest
+
+    @param uint32_t *secs 
+
+ ************************************************************************/
+void from_secs_to_cest(uint32_t *secs);
+
+/**********************************************************************
+ * This function choose the mode among the arguments received
+ * 
+ *  @param int argc
+ *  @param char *argv[]
+ * 
+ * ********************************************************************/
 void startingArg(int argc, char *argv[]);
-void time_conversion(uint32_t * seconds);
