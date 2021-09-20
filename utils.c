@@ -71,3 +71,5 @@ void startingArg(int argc, char *argv[]){
         
     }
 }
+
+

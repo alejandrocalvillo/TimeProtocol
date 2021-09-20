@@ -4,7 +4,9 @@
 char *servername;
 int mode=0;
 int port=0;
-
+static void signintHandler(int sig){
+    printf("SIGINT received, closing program\n");
+}
 void timerProtocol (){
     int sockfd;
     int errorCheck;
@@ -23,7 +25,7 @@ void timerProtocol (){
         }
         if((dest_server=gethostbyname(servername))==NULL){//Resolvemos el host
             perror("NOT A VALID HOST");
-            exit(0);
+            exit(1);
         }
         memcpy(&dest_addr.sin_addr,dest_server->h_addr_list[0], dest_server->h_length);
         dest_addr.sin_family=AF_INET;
@@ -43,7 +45,8 @@ void timerProtocol (){
         datagram=ntohl(datagram);
         from_secs_to_cest(&datagram);
     }
-    if(mode==1){
+    if(mode==1){//TCP Client
+        u_int32_t datagram; //VOID DATAGRAM 32 bits
         sockfd=socket(PF_INET, SOCK_STREAM,0);
         dest_addr.sin_family=AF_INET;
         dest_addr.sin_port=htonl(port);
@@ -57,13 +60,39 @@ void timerProtocol (){
             perror("Server seems unreacheble\n");
             exit(1);
         }
+        for(int i=0; i<4;i+=errorCheck){//Pochisimo esto yo creo
+            errorCheck=recv(sockfd, &datagram, (size_t)4,0);
+            if(errorCheck==-1){
+                printf("Error at input");
+            }
+        }
+        datagram=ntohl(datagram);
+        from_secs_to_cest(&datagram);
+
+        while(signal(SIGINT, signintHandler)!=SIG_ERR){
+            for(int i=0; i<4;i+=errorCheck){//Pochisimo esto yo creo
+            errorCheck=recv(sockfd, &datagram, (size_t)4,0);
+            if(errorCheck==-1){
+                printf("Error at input");
+                }
+            }
+        }
+        if (signal(SIGINT, signintHandler)==SIG_ERR){
+            close(sockfd);
+            exit(1);
+        }
     }
-    if(mode==2){//TCP Client
+    if(mode==2){//TCP Server
         sockfd=socket(PF_INET, SOCK_STREAM,0);
+        my_addr.sin_family = AF_INET;
         my_addr.sin_port=port;
         my_addr.sin_addr.s_addr=htonl(INADDR_ANY);
-        //errorCheck=bind(sockfd,);
-
+        memset(&(my_addr.sin_zero), '\0', 8);
+        errorCheck=bind(sockfd,(struct sockaddr *)&my_addr, sizeof(struct sockaddr));
+        if(errorCheck=-1){
+            printf("CANNOT CREATE SOURCE SERVER\n");
+            exit(1);
+        }
     }
     close(sockfd);
 }
@@ -75,6 +104,7 @@ int main(int argc, char *argv[]){
         if (strcmp(argv[1], "man")==0){
         
         printMan();
+        mode=3;
 
             }
         }

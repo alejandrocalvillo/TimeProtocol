@@ -32,3 +32,4 @@ void from_secs_to_cest(uint32_t *secs);
  * 
  * ********************************************************************/
 void startingArg(int argc, char *argv[]);
+
