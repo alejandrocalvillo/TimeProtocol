@@ -52,7 +52,7 @@ void timerProtocol (){
         dest_addr.sin_port=htonl(port);
         if((dest_server=gethostbyname(servername))==NULL){//Resolvemos el host
             perror("NOT A VALID HOST");
-            exit(0);
+            exit(1);
         }
         memcpy(&dest_addr.sin_addr,dest_server->h_addr_list[0], dest_server->h_length);
         errorCheck=connect(sockfd,(struct sockaddr *)&dest_addr,(socklen_t)sizeof(dest_addr));
@@ -73,7 +73,7 @@ void timerProtocol (){
             for(int i=0; i<4;i+=errorCheck){//Pochisimo esto yo creo
             errorCheck=recv(sockfd, &datagram, (size_t)4,0);
             if(errorCheck==-1){
-                printf("Error at input");
+                printf("Error in packet");
                 }
             }
         }
@@ -85,14 +85,20 @@ void timerProtocol (){
     if(mode==2){//TCP Server
         sockfd=socket(PF_INET, SOCK_STREAM,0);
         my_addr.sin_family = AF_INET;
-        my_addr.sin_port=port;
+        my_addr.sin_port=htons(port);
         my_addr.sin_addr.s_addr=htonl(INADDR_ANY);
         memset(&(my_addr.sin_zero), '\0', 8);
         errorCheck=bind(sockfd,(struct sockaddr *)&my_addr, sizeof(struct sockaddr));
         if(errorCheck=-1){
             printf("CANNOT CREATE SOURCE SERVER\n");
-            exit(1);
+            exit(0);
         }
+        listen(sockfd, 10);
+        while(1){
+            int sin_size = sizeof(struct sockaddr_in);
+            int new_fd = accept(sockfd, (struct sockaddr *)&dest_addr, &sin_size);
+        }
+     
     }
     close(sockfd);
 }
