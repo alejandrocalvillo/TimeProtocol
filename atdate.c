@@ -97,6 +97,11 @@ void timerProtocol (){
         while(1){
             int sin_size = sizeof(struct sockaddr_in);
             int new_fd = accept(sockfd, (struct sockaddr *)&dest_addr, &sin_size);
+
+            if (new_fd>=1){
+                printf("Connected\n");
+                break;
+            }
         }     
     }
     close(sockfd);
