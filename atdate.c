@@ -89,7 +89,7 @@ void timerProtocol (){
         my_addr.sin_addr.s_addr=htonl(INADDR_ANY);
         memset(&(my_addr.sin_zero), '\0', 8);
         errorCheck=bind(sockfd,(struct sockaddr *)&my_addr, sizeof(struct sockaddr));
-        if(errorCheck=-1){
+        if(errorCheck==-1){
             printf("CANNOT CREATE SOURCE SERVER\n");
             exit(0);
         }
@@ -97,8 +97,7 @@ void timerProtocol (){
         while(1){
             int sin_size = sizeof(struct sockaddr_in);
             int new_fd = accept(sockfd, (struct sockaddr *)&dest_addr, &sin_size);
-        }
-     
+        }     
     }
     close(sockfd);
 }
@@ -119,6 +118,3 @@ int main(int argc, char *argv[]){
         }  
     timerProtocol();
 }
-
-
-    
