@@ -17,6 +17,22 @@ void from_secs_to_cest(uint32_t * secs){
 	printf("%s",ctime(&time));
 }
 
+int retardo(int number_of_seconds)
+{   
+    int boolean = 0;
+    // Converting time into milli_seconds
+    int milli_seconds = 1000 * number_of_seconds;
+  
+    // Storing start time
+    clock_t start_time = clock();
+  
+    // looping till required time is not achieved
+    while (clock() < start_time + milli_seconds){
+        boolean = 1;
+    }
+    return boolean;
+}
+
 void printMan(){
     printf("\n");
     printf("-s serverhost: nombre del servidor TIME al que se conectará el programa para obtener la fecha y hora actual. Este argumento es obligatorio sólo si el programa se lanza en modo consulta, es decir, con -m cu o -m ct");

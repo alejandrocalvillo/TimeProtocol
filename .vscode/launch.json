@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/atdate",
-            "args": ["-m","ct","-p","2345","-s", "hola.com"],
+            "args": ["-m","ct","-p","6038","-s", "127.0.0.1"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],

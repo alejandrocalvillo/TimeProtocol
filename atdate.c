@@ -4,8 +4,9 @@
 char *servername;
 int mode=0;
 int port=0;
-static void signintHandler(int sig){
+ void signintHandler(int sig){
     printf("SIGINT received, closing program\n");
+    exit(0);
 }
 void timerProtocol (){
     int sockfd;
@@ -47,44 +48,39 @@ void timerProtocol (){
     }
     if(mode==1){//TCP Client
         u_int32_t datagram; //VOID DATAGRAM 32 bits
+        signal(SIGINT, signintHandler);
         sockfd=socket(PF_INET, SOCK_STREAM,0);
         bzero((char *)&dest_addr, sizeof(dest_addr));
         dest_addr.sin_family=AF_INET;
-        dest_addr.sin_port=htons(port);
         if((dest_server=gethostbyname(servername))==NULL){//Resolvemos el host
             perror("NOT A VALID HOST");
             exit(1);
         }
-        bcopy((char*)dest_server->h_addr,(char*)dest_addr.sin_addr.s_addr, dest_server->h_length);
+        dest_addr.sin_port=htons(port);
+        bcopy((char *)dest_server->h_addr, (char *)&dest_addr.sin_addr.s_addr, dest_server->h_length);
         //memcpy(&dest_addr.sin_addr.s_addr,dest_server->h_addr_list[0], dest_server->h_length);
         errorCheck=connect(sockfd,(struct sockaddr *)&dest_addr,(socklen_t)sizeof(dest_addr));
         if(errorCheck==-1){
             perror("Server seems unreacheble\n");
             exit(1);
         }
-        for(int i=0; i<4;i+=errorCheck){//Pochisimo esto yo creo
+        while(1){
             errorCheck=recv(sockfd, &datagram, (size_t)4,0);
-            if(errorCheck==-1){
-                printf("Error at input");
-            }
-        }
-        datagram=ntohl(datagram);
-        from_secs_to_cest(&datagram);
-
-        while(signal(SIGINT, signintHandler)!=SIG_ERR){
-            for(int i=0; i<4;i+=errorCheck){//Pochisimo esto yo creo
-            errorCheck=recv(sockfd, &datagram, (size_t)4,0);
-            if(errorCheck==-1){
-                printf("Error in packet");
-                }
-            }
-        }
+            datagram=ntohl(datagram);
+            from_secs_to_cest(&datagram);
+        }  
         if (signal(SIGINT, signintHandler)==SIG_ERR){
             close(sockfd);
             exit(1);
         }
+        
+
     }
     if(mode==2){//TCP Server
+        u_int32_t datagram;
+        int sender;
+        struct hostent *hostp;
+        int hostaddrp;
         sockfd=socket(PF_INET, SOCK_STREAM,0);
         my_addr.sin_family = AF_INET;
         my_addr.sin_port=htons(port);
@@ -97,13 +93,23 @@ void timerProtocol (){
         }
         listen(sockfd, 1);
         while(1){
+            printf("Holita");
             int sin_size = sizeof(struct sockaddr_in);
             int new_fd = accept(sockfd, (struct sockaddr *)&dest_addr, &sin_size);
+            printf("Pa paquete el tuyo");
 
-            if (new_fd>=1){
-                printf("Connected\n");
-                break;
+            //hostp = gethostbyaddr((const char *)&dest_addr.sin_addr.s_addr, sizeof(dest_addr.sin_addr.s_addr), AF_INET);
+           // hostaddrp = inet_ntoa(dest_addr.sin_addr); //No se yo cuanto de bien está esto
+            if (new_fd==-1){
+                perror("Error acepting Connection\n");
+                exit(0);
             }
+            while(new_fd!=-1){
+                datagram=htonl((uint32_t)time(NULL)+2208988800);
+                sender = send(new_fd,&datagram,sizeof(datagram),0);
+                retardo(3000);
+            }
+            close(new_fd);
         }     
     }
     close(sockfd);
