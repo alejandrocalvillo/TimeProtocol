@@ -48,13 +48,15 @@ void timerProtocol (){
     if(mode==1){//TCP Client
         u_int32_t datagram; //VOID DATAGRAM 32 bits
         sockfd=socket(PF_INET, SOCK_STREAM,0);
+        bzero((char *)&dest_addr, sizeof(dest_addr));
         dest_addr.sin_family=AF_INET;
-        dest_addr.sin_port=htonl(port);
+        dest_addr.sin_port=htons(port);
         if((dest_server=gethostbyname(servername))==NULL){//Resolvemos el host
             perror("NOT A VALID HOST");
             exit(1);
         }
-        memcpy(&dest_addr.sin_addr,dest_server->h_addr_list[0], dest_server->h_length);
+        bcopy((char*)dest_server->h_addr,(char*)dest_addr.sin_addr.s_addr, dest_server->h_length);
+        //memcpy(&dest_addr.sin_addr.s_addr,dest_server->h_addr_list[0], dest_server->h_length);
         errorCheck=connect(sockfd,(struct sockaddr *)&dest_addr,(socklen_t)sizeof(dest_addr));
         if(errorCheck==-1){
             perror("Server seems unreacheble\n");
