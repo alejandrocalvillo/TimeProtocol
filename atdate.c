@@ -48,6 +48,7 @@ void timerProtocol (){
     if(mode==1){//TCP Client
         u_int32_t datagram; //VOID DATAGRAM 32 bits
         sockfd=socket(PF_INET, SOCK_STREAM,0);
+        bzero((char *)&dest_addr, sizeof(dest_addr));
         dest_addr.sin_family=AF_INET;
         dest_addr.sin_port=htonl(port);
         if((dest_server=gethostbyname(servername))==NULL){//Resolvemos el host
