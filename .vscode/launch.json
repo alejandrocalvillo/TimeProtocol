@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/atdate",
-            "args": [],
+            "args": ["-m","s","-p","2345"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],

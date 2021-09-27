@@ -93,7 +93,7 @@ void timerProtocol (){
             printf("CANNOT CREATE SOURCE SERVER\n");
             exit(0);
         }
-        listen(sockfd, 10);
+        listen(sockfd, 1);
         while(1){
             int sin_size = sizeof(struct sockaddr_in);
             int new_fd = accept(sockfd, (struct sockaddr *)&dest_addr, &sin_size);
