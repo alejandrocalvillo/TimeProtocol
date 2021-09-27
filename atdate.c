@@ -55,7 +55,8 @@ void timerProtocol (){
             perror("NOT A VALID HOST");
             exit(1);
         }
-        memcpy(&dest_addr.sin_addr,dest_server->h_addr_list[0], dest_server->h_length);
+        bcopy((char*)dest_server->h_addr,(char*)dest_addr.sin_addr.s_addr, dest_server->h_length);
+        //memcpy(&dest_addr.sin_addr.s_addr,dest_server->h_addr_list[0], dest_server->h_length);
         errorCheck=connect(sockfd,(struct sockaddr *)&dest_addr,(socklen_t)sizeof(dest_addr));
         if(errorCheck==-1){
             perror("Server seems unreacheble\n");
