@@ -4,7 +4,7 @@
 char *servername;
 int mode=0;
 int port=0;
- void signintHandler(int sig){
+ void signintHandler( int sig){
     printf("SIGINT received, closing program\n");
     exit(0);
 }
@@ -48,7 +48,7 @@ void timerProtocol (){
     }
     if(mode==1){//TCP Client
         u_int32_t datagram; //VOID DATAGRAM 32 bits
-        signal(SIGINT, signintHandler);
+        signal(SIGINT, signintHandler)(sockfd);
         sockfd=socket(PF_INET, SOCK_STREAM,0);
         bzero((char *)&dest_addr, sizeof(dest_addr));
         dest_addr.sin_family=AF_INET;
@@ -68,11 +68,13 @@ void timerProtocol (){
             errorCheck=recv(sockfd, &datagram, (size_t)4,0);
             datagram=ntohl(datagram);
             from_secs_to_cest(&datagram);
-        }  
-        if (signal(SIGINT, signintHandler)==SIG_ERR){
+
+            if (signal(SIGINT, signintHandler)==SIG_ERR){
             close(sockfd);
             exit(1);
-        }
+            }
+        }  
+        
         
 
     }
@@ -105,7 +107,7 @@ void timerProtocol (){
                 exit(0);
             }
             while(new_fd!=-1){
-                datagram=htonl((uint32_t)time(NULL)+2208988800);
+                datagram=htonl((u_int32_t)time(NULL)+2208988800);
                 sender = send(new_fd,&datagram,sizeof(datagram),0);
                 retardo(3000);
             }
