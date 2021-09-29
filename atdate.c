@@ -1,5 +1,5 @@
 #include "utils.h"
-
+#include <sys/socket.h>
 
 char *servername;
 int mode=0;
@@ -31,7 +31,7 @@ void timerProtocol (){
         memcpy(&dest_addr.sin_addr,dest_server->h_addr_list[0], dest_server->h_length);
         dest_addr.sin_family=AF_INET;
         dest_addr.sin_port=htons(port);
-        errorCheck=sendto(sockfd, &datagram,(u_int32_t)4,0,(struct sockaddr *)&dest_addr,(socklen_t)sizeof(dest_addr));//Lo de los octetos me lia
+        errorCheck=sendto(sockfd, &datagram,(u_int32_t)0,0,(struct sockaddr *)&dest_addr,(socklen_t)sizeof(dest_addr));//Lo de los octetos me lia
         if(errorCheck==-1){
             perror("Ha ocurrido un error ");
             exit(0);
@@ -43,6 +43,7 @@ void timerProtocol (){
                 printf("Error at input");
             }
         }
+        close(sockfd);
         datagram=ntohl(datagram);
         from_secs_to_cest(&datagram);
     }
@@ -106,6 +107,9 @@ void timerProtocol (){
             while(new_fd!=-1){
                 datagram=htonl((u_int32_t)time(NULL)+2208988800);
                 sender = send(new_fd,&datagram,sizeof(datagram),0);
+                if (sender<=0){
+                    close(new_fd);
+                }
                 retardo(3000);
             }
             close(new_fd);
