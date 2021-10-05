@@ -99,6 +99,7 @@ void timerProtocol (){
             int new_fd = accept(sockfd, (struct sockaddr *)&dest_addr, &sin_size);
             //hostp = gethostbyaddr((const char *)&dest_addr.sin_addr.s_addr, sizeof(dest_addr.sin_addr.s_addr), AF_INET);
            // hostaddrp = inet_ntoa(dest_addr.sin_addr); //No se yo cuanto de bien está esto
+           if(!fork()){
            close(sockfd);
             if (new_fd==-1){
                 perror("Error acepting Connection\n");
@@ -113,6 +114,8 @@ void timerProtocol (){
                 retardo(3000);
             }
             close(new_fd);
+            exit(1);
+            }
         }     
     }
     close(sockfd);
