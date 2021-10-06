@@ -10,6 +10,7 @@
 
 extern char *servername;
 extern int mode;
+extern int debugger;
 extern int port;
 
 void from_secs_to_cest(uint32_t * secs){
@@ -72,9 +73,12 @@ void startingArg(int argc, char *argv[]){
             {
                 mode=2;
             }
-            
-
         }
+        if (strcmp(argv[i], "-d"))
+        {
+            
+        }
+        
         if(strcmp(argv[i], "-p")==0){
 
             port=atoi(argv[i+1]);
@@ -83,6 +87,8 @@ void startingArg(int argc, char *argv[]){
 
         if (strcmp(argv[i], "-d")==0){
            
+            debugger=1;
+
         }
         
     }
