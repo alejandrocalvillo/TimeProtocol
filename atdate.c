@@ -171,7 +171,7 @@ void timerProtocol (){
                 if (sender<=0){
                     close(new_fd);
                 }
-                retardo(3000);
+                retardo(1000);
             }
             close(new_fd);
             exit(1);
