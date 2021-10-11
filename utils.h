@@ -8,7 +8,8 @@
 #include <netdb.h>
 #include <time.h>
 #include <signal.h>
-
+#include <errno.h>
+#include <unistd.h>
 
 /**************
  * Prints manual when option "atdate man"

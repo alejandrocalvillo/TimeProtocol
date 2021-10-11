@@ -1,6 +1,9 @@
 {
     "files.associations": {
         "utils.h": "c",
-        "socket.h": "c"
+        "socket.h": "c",
+        "unistd.h": "c",
+        "math.h": "c",
+        "stdlib.h": "c"
     }
 }
